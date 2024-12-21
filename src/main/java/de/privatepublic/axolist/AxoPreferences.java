@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 
 public class AxoPreferences {
 	
-	private static final String PREF_FILENAME = "axoloti.prefs";
+	private static String PREF_FILENAME = "axoloti.prefs";
 	
 	private String version;
 	private String factoryDir;
@@ -24,6 +24,11 @@ public class AxoPreferences {
 		SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
 		date = formatter.format(new Date());
 		File axoPref = new File(axodir, PREF_FILENAME);
+		if (!axoPref.exists()) {
+			/* axoloti.prefs not found, check if ksoloti.prefs exists */
+			PREF_FILENAME = "ksoloti.prefs";
+			axoPref = new File(axodir, PREF_FILENAME);
+		}
 		if (axoPref.exists()) {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -40,14 +45,20 @@ public class AxoPreferences {
 					if ("factory".equals(libname)) {
 						this.factoryDir = location+"objects/";
 					}
+					else if ("axoloti-factory".equals(libname)) {
+						this.factoryDir = location+"objects/";
+					}
 					if ("community".equals(libname)) {
+						this.communityDir = location+"objects/";
+					}
+					else if ("axoloti-community".equals(libname)) {
 						this.communityDir = location+"objects/";
 					}
 				}
 			}				
 		}
 		else {
-			throw new IllegalStateException("Could not read Axoloti preferences in "+axodir);
+			throw new IllegalStateException("Could not read Axoloti/Ksoloti preferences in "+axodir);
 		}
 	}
 	

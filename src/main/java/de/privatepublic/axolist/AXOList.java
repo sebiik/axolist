@@ -39,18 +39,19 @@ public class AXOList {
 	public static final String HTML_RESOURCE_OUTPUT_PATH = "res/";
 	public static final String HTML_RESOURCE_STYLE_SHEET_NAME = "styles.css";
 	public static final String HTML_RESOURCE_SCRIPT_NAME = "list.js";
-	public static final String OUTPUT_FILENAME_FACTORY = "factory-objectlist.html";
-	public static final String OUTPUT_FILENAME_COMMUNITY = "community-objectlist.html";
+	public static final String OUTPUT_FILENAME_FACTORY = "axoloti-factory-objectlist.html";
+	public static final String OUTPUT_FILENAME_COMMUNITY = "axoloti-community-objectlist.html";
 	
 
 	public static void main(String[] args) {
 		SimpleLog.info("- - -", "  Axoloti Object List Generator  ", "- - - -");
 		SimpleLog.info("- - -", "08/2016 by peter@privatepublic.de", "- - - -");
+		SimpleLog.info("- - -", "fixes for Ksoloti 11/2024 by ksoloti.axo@gmail.com", "- - - -");
 		SimpleLog.info();
 		String axolotiHomePath = null;
 		String outputPath = DEFAULT_OUTPUT_PATH;
 		if (args.length==0) {
-			SimpleLog.error("Called with no arguments. Please call this program with the path to your Axoloti home directory containing the axoloti.prefs file. Optional second parameter is the path to the desired output folder. Per default output is to: "+DEFAULT_OUTPUT_PATH);
+			SimpleLog.error("Called with no arguments. Please call this program with the path to your Axoloti/Ksoloti home directory containing the axoloti.prefs/ksoloti.prefs file. Optional second parameter is the path to the desired output folder. Per default output is to: "+DEFAULT_OUTPUT_PATH);
 			System.exit(-1);
 		}
 		else {
@@ -66,10 +67,10 @@ public class AXOList {
 		try {
 			pref = new AxoPreferences(axolotiHomePath);
 		} catch (Exception e) {
-			SimpleLog.error("Could not read axoloti.prefs in",axolotiHomePath);
+			SimpleLog.error("Could not read axoloti.prefs/ksoloti.prefs in",axolotiHomePath);
 			System.exit(-1);
 		}
-		SimpleLog.info("Found Axoloti preferences:", pref);
+		SimpleLog.info("Found Axoloti/Ksoloti preferences:", pref);
 		SimpleLog.info("Rendering HTML output to:", outputPath);
 		new File(outputPath).mkdirs();
 		List<Axo> objects = readObjects(LibraryType.FACTORY, pref);
