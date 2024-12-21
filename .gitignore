@@ -1,2 +1,5 @@
-target/**
-rendered/**
+/target
+/rendered
+/axolist
+/.settings
+/mvn.log
